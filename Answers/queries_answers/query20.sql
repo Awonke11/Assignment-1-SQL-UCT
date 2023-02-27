@@ -3,9 +3,11 @@ Give their customerNumber(s) */
 SELECT customerNumber
 FROM payments
 GROUP BY customerNumber
-HAVING SUM(amount) = (
-    SELECT MIN(amo.summ) FROM (
-        SELECT customerNumber, SUM(amount) AS summ
+HAVING COUNT(customerNumber) = (
+    SELECT MIN(test.cont)
+    FROM (
+        SELECT customerNumber, COUNT(customerNumber) AS cont
         FROM payments
         GROUP BY customerNumber
-)amo);
+    )test
+);
